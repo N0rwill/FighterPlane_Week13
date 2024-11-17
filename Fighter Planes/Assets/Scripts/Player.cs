@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     public GameObject bullet;
     public GameObject explosion;
     public GameObject thruster;
+    public GameObject shield;
 
     // Start is called before the first frame update
     void Start()
@@ -119,6 +120,14 @@ public class Player : MonoBehaviour
         gameManager.UpdatePowerupText("");
     }
 
+    IEnumerator ShieldPowerDown()
+    {
+        yield return new WaitForSeconds(3f);
+        shield.gameObject.SetActive(false);
+        hasShield = false;
+        gameManager.UpdatePowerupText("");
+    }
+
     private void OnTriggerEnter2D(Collider2D whatIHit)
     {
         if(whatIHit.tag == "Powerup")
@@ -149,7 +158,9 @@ public class Player : MonoBehaviour
                 case 4:
                     //shield
                     gameManager.UpdatePowerupText("Picked up Shield!");
+                    shield.gameObject.SetActive(true);
                     hasShield = true;
+                    StartCoroutine(ShieldPowerDown());
                     break;
             }
             Destroy(whatIHit.gameObject);
