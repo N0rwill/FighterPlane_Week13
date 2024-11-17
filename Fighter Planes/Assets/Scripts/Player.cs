@@ -82,6 +82,7 @@ public class Player : MonoBehaviour
             lives--;
         } else if (hasShield == true)
         {
+            hasShield = false;
             //lose the shield
             //no longer have a shield
         }
